@@ -1,0 +1,1 @@
+insert into contact (Id) values('1');
