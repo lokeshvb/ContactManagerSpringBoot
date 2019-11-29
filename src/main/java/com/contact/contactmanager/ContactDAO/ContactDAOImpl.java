@@ -24,7 +24,7 @@ public class ContactDAOImpl implements ContactDAO {
 
     @Override
     @Transactional
-    public List<Contact> findall() {
+    public List<Contact> findAll() {
 
         Session curretSession = entityManager.unwrap(Session.class);
 
@@ -36,5 +36,25 @@ public class ContactDAOImpl implements ContactDAO {
 		}
 
         return contacts;
+    }
+    @Override
+    public Contact findById(int Id) {
+        Session curretSession = entityManager.unwrap(Session.class);
+        Contact contact = curretSession.get(Contact.class, Id);
+
+        return contact;
+    }
+    @Override
+    public void addContact(Contact contact) {
+        Session currSession = entityManager.unwrap(Session.class);
+
+        currSession.saveOrUpdate(contact);
+    }
+    @Override
+    public void deleteById(int Id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query query = currentSession.createQuery("delete from Contact where id =:contactId");
+        query.setParameter("contactId", Id);
     }
 }

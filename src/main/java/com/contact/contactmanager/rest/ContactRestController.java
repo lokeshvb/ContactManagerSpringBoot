@@ -6,8 +6,11 @@ import com.contact.contactmanager.entity.Contact;
 import com.contact.contactmanager.service.ContactService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,16 +26,23 @@ public class ContactRestController {
 	}
   
     @GetMapping("/contacts")
-    public  List<Contact> findall() {
+    public  List<Contact> getAllContact() {
         return contactservice.findall();
     }
-    @GetMapping("/test")
-    public String test() {
-        return "hello";
+
+    @GetMapping("/contacts/{contactId}")
+    public Contact getContact( @PathVariable int contactId) {
+        return contactservice.getContactById(contactId);
     }
     @PostMapping("/contacts")
-    public String test2()
-    {
-        return "test";
+    public Contact saveContact(@RequestBody Contact contact) {
+        contact.setId(0);
+        contactservice.addContact(contact);
+        return contact;
+    }
+    @DeleteMapping("/contacts")
+    public String deleteContact(@PathVariable int Id) {
+        contactservice.deleteContactByID(Id);
+        return "Deleted Employee";
     }
 }
