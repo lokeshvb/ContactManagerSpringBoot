@@ -7,4 +7,4 @@ Then start the application.
 
 mvn spring-boot:run
 
-
+your application will be started on port 8080. you can make calls to api using http://localhost:8080/api/contacts
